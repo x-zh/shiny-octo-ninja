@@ -33,9 +33,15 @@ router.get('/signup', function(req,res){
 router.post('/signup', function(req, res){
     var username = req.body.username;
     var password = req.body.password;
-    var user = new User({username: username, password: password});
-    user.save();
-    res.redirect('/');
+    User.register(new User({username: username}),password, function(err, user){
+	if(err){
+	    res.sendfile('views/signup.html');
+	    return false;
+	}
+	passport.authenticate('local')(req, res, function () {
+          res.redirect('/');
+	  });
+    });
 });
 
 module.exports = router;
