@@ -44,4 +44,8 @@ router.post('/signup', function(req, res){
     });
 });
 
+router.get('/chat-cs', function(req,res){
+    res.sendfile('views/chat-cs.html');
+})
+
 module.exports = router;

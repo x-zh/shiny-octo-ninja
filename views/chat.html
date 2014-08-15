@@ -14,8 +14,8 @@
   </head>
   <body>
     <ul id="messages"></ul>
-    <form id="chat-form" name="chat" action="" method="post">
-      <input  type="hidden" name="sid" value="1"/>
+    <form id="chat-form" name="chat" action="" >
+      <input  id="gid" type="hidden" name="gid" value="0"/>
       <input  id="uid" type="hidden" name="uid" value="1"/>
       <input id="m" name="msg" autocomplete="off" />
       <button id="form-btn">Send</button>
@@ -25,13 +25,29 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 var socket = io('http://localhost:3000');
-    $(function(){
-	$('#chat-form').submit(function(){
-	    socket.emit("message", {msg: $("#m").val(), uid:$("#uid").val()})
-	    $("#m").val('');
-	    return false;
-	});
+
+socket.on("connect", function(){
+    if( $('#gid').val()=="0"){
+	socket.emit("guest connected");
+    }
+    socket.on("guestID", function(data){
+	$("#gid").val(data);
+	console.log("got gid"+data);
     });
+    socket.on("message", function(msg){
+	$('#messages').append($('<li>').text(msg));
+    });
+})
+
+$(function(){
+    $('form').submit(function(){
+    var msg = $("#m").val();
+    socket.emit("message", {content: msg, uid:$("#uid").val(), gid:$("#gid").val(), from:0});
+    $('#messages').append($('<li>').text(msg));
+    $("#m").val('');
+    return false;
+    });
+})
 </script>
 </body>
 </html>
