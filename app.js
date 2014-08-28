@@ -4,9 +4,15 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
 
 
 var app = express();
+
+//use session
+app.use(session({
+    secret: 'I see'
+}))
 
 //mongodb setup
 var mongoose = require('mongoose');

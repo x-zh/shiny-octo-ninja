@@ -23,31 +23,6 @@
 
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script>
-var socket = io('http://localhost:3000');
-
-socket.on("connect", function(){
-    if( $('#gid').val()=="0"){
-	socket.emit("guest connected");
-    }
-    socket.on("guestID", function(data){
-	$("#gid").val(data);
-	console.log("got gid"+data);
-    });
-    socket.on("message", function(msg){
-	$('#messages').append($('<li>').text(msg));
-    });
-})
-
-$(function(){
-    $('form').submit(function(){
-    var msg = $("#m").val();
-    socket.emit("message", {content: msg, uid:$("#uid").val(), gid:$("#gid").val(), from:0});
-    $('#messages').append($('<li>').text(msg));
-    $("#m").val('');
-    return false;
-    });
-})
-</script>
+<script src="js/chat.js"></script>
 </body>
 </html>

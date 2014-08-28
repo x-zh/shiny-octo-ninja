@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/chat', function(req, res) {
-  res.sendfile('views/chat.html');
+    res.render('chat', {gid: req.sessionID, uid:1});
 });
 
 router.get('/login', function(req,res){
@@ -45,7 +45,7 @@ router.post('/signup', function(req, res){
 });
 
 router.get('/chat-cs', function(req,res){
-    res.sendfile('views/chat-cs.html');
+    res.render('chat-cs', {uid:1});
 })
 
 module.exports = router;

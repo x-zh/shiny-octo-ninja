@@ -33,10 +33,8 @@ var socket = function(server){
 	    console.log(Object.keys(cs));
 	});
 
-	socket.on('guest connected', function(){
-	    //gid = generateGuestId();
-	    var gid=socket.id;
-	    socket.emit('guestID', gid);
+	socket.on('guest connected', function(data){
+	    var gid=data;
 	    guests[gid]={gid:gid, socket:socket};
 	    console.log(Object.keys(guests));
 	});
