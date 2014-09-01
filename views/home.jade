@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Welcome, #{user.username}
+  div
+    div insert this piece of code into your websites:
+    div xxxxxxxxxxxxx?uid=#{user._id}
+  br
+  a(href="/chat-cs") Customer Service Chat Page
+
+  br
+  a(href="/logout") Logout
+

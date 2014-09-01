@@ -7,9 +7,24 @@ var User = mongoose.model('User');
 
 var passport = require('passport');
 
+
+
+function requireLogin(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.send("hello");
+    if(req.user){
+        res.redirect('/home');
+    }
+    else{
+        res.render('index');
+    }
 });
 
 router.get('/chat', function(req, res) {
@@ -21,9 +36,13 @@ router.get('/login', function(req,res){
 })
 
 router.post('/login', 
-	passport.authenticate('local', {successRedirect: '/', 
-					failureRedirect: '/login',
-					failureFlash: false })
+	passport.authenticate('local', { 
+                    failureRedirect: '/login',
+					failureFlash: false 
+                }),
+    function(req,res) {
+        res.redirect('/');
+    }
 );
 
 router.get('/signup', function(req,res){
@@ -38,14 +57,30 @@ router.post('/signup', function(req, res){
 	    res.sendfile('views/signup.html');
 	    return false;
 	}
+
 	passport.authenticate('local')(req, res, function () {
           res.redirect('/');
 	  });
     });
 });
 
-router.get('/chat-cs', function(req,res){
-    res.render('chat-cs', {uid:1});
+router.get('/logout', function(req,res){
+    console.log(req.user);
+    if(req.user){
+        req.logout();
+    }
+    res.redirect('/');
 })
+
+router.get('/chat-cs', requireLogin, function(req,res){
+    res.render('chat-cs', {uid:req.user._id});
+})
+
+
+router.get('/home', requireLogin, function(req, res) {
+    res.render('home', { user:req.user });
+});
+
+
 
 module.exports = router;

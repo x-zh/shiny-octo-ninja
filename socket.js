@@ -44,7 +44,8 @@ var socket = function(server){
 
 
 	socket.on('message', function(data){
-	    var msg = new Message({uid: data.uid, sid: socket.id, content: data.msg, from: data.from});
+        //TODO:ID should not be sent by socket, for security
+	    var msg = new Message({uid: data.uid, sid: data.gid, content: data.content, from: data.from});
 	    console.log(data);
 	    msg.save();
 

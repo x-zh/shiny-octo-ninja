@@ -13,9 +13,6 @@ var UserSchema = new Schema({
 
 UserSchema.plugin(passportLocalMongoose);
 
-UserSchema.methods.validPassword = function ( password ){
-    return password == this.password;
-};
 
 mongoose.model('User', UserSchema);
 

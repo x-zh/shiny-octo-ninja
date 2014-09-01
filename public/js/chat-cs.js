@@ -40,7 +40,7 @@ app.controller('chatCtrl', function ($scope, socket) {
 
     $scope.sendMessage = function(guestId){
         var tab = $scope.tabs[$scope.findTab(guestId)];
-        socket.emit('message', {content: tab.toSendMessage, gid:guestId, from:1});
+        socket.emit('message', {content: tab.toSendMessage, gid:guestId, from:1, uid:$('#uid').val()});
         tab.messages.push(tab.toSendMessage);
         tab.toSendMessage='';
     };
