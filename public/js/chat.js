@@ -2,7 +2,7 @@ var socket = io('http://localhost:3000');
 
 socket.on("connect", function(){
     //register this socket
-	socket.emit("guest connected", $('#gid').val());
+	socket.emit("guest connected", {gid:$('#gid').val(), uid: $('#uid').val()});
     /*
     socket.on("guestID", function(data){
 	$("#gid").val(data);

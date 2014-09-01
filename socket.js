@@ -15,27 +15,30 @@ var socket = function(server){
     io.on('connection', function(socket){
 
 	socket.on('disconnect', function  () {
-	    console.log("someone left\n");
-	    for(var i in guests){
-		if( guests[i].socket ===socket ){
-		    delete guests[i];
-		}
-	    }
-
-	    for(var i in cs){
-		if( cs[i].socket ===socket ){
-		    delete cs[i];
-		}
-	    }
+        if( 'gid' in socket ){
+        //guest disconnect,
+            socket.to(cs[socket.uid].socket.id).emit("guest disconnect", socket.gid); 
+            delete guests[socket.gid];
+	        console.log("guest left, gid: "+socket.gid);
+        }
+        else{
+        //cs disconnect
+            delete cs[socket.uid];
+	        console.log("cs left, uid: "+socket.uid);
+        }
 	});
 	socket.on('cs connected', function(uid){
 	    cs[uid]={uid:uid, socket:socket};
+        socket.uid=uid;
 	    console.log(Object.keys(cs));
 	});
 
 	socket.on('guest connected', function(data){
-	    var gid=data;
+	    var gid=data.gid;
+	    var uid=data.uid;
 	    guests[gid]={gid:gid, socket:socket};
+        socket.gid=gid;
+        socket.uid=uid;
 	    console.log(Object.keys(guests));
 	});
 
