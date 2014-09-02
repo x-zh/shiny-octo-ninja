@@ -12,7 +12,7 @@ var app = express();
 //use session
 app.use(session({
     secret: 'I see'
-}))
+}));
 
 //mongodb setup
 var mongoose = require('mongoose');

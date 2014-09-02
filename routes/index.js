@@ -10,7 +10,7 @@ var passport = require('passport');
 
 
 function requireLogin(req, res, next) {
-  if (req.user) {
+  if (req.isAuthenticated()) {
     next();
   } else {
     res.redirect('/login');
@@ -19,7 +19,7 @@ function requireLogin(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    if(req.user){
+    if(req.isAuthenticated()){
         res.redirect('/home');
     }
     else{
@@ -66,7 +66,7 @@ router.post('/signup', function(req, res){
 
 router.get('/logout', function(req,res){
     console.log(req.user);
-    if(req.user){
+    if(req.isAuthenticated()){
         req.logout();
     }
     res.redirect('/');

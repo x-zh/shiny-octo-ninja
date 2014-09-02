@@ -30,7 +30,7 @@ var socket = function(server){
 	socket.on('cs connected', function(uid){
 	    cs[uid]={uid:uid, socket:socket};
         socket.uid=uid;
-	    console.log(Object.keys(cs));
+	    console.log('cs connected: '+uid);
 	});
 
 	socket.on('guest connected', function(data){
@@ -39,25 +39,26 @@ var socket = function(server){
 	    guests[gid]={gid:gid, socket:socket};
         socket.gid=gid;
         socket.uid=uid;
-	    console.log(Object.keys(guests));
+	    console.log('guest connected: '+gid);
 	});
 
 
 	socket.on('message', function(data){
         //TODO:ID should not be sent by socket, for security
 	    var msg = new Message({uid: data.uid, sid: data.gid, content: data.content, from: data.from});
-	    console.log(data);
 	    msg.save();
+        console.log("new message");
+	    console.log(data);
 
 	    var uid=data.uid;
 	    var gid=data.gid;
 	    var from=data.from;
 	    //message from 0: guest, 1: customer service
 	    if(from==0){
-		socket.to(cs[uid].socket.id).emit("message", data);
+            socket.to(cs[uid].socket.id).emit("message", data);
 	    }
 	    else{
-		socket.to(guests[gid].socket.id).emit("message", data.content);
+            socket.to(guests[gid].socket.id).emit("message", data.content);
 	    }
 
 	})
