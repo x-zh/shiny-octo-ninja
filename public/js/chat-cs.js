@@ -2,8 +2,8 @@ var app = angular.module('chatCS', ['ui.bootstrap','btford.socket-io']);
 app.factory('socket', function(socketFactory){ return socketFactory(); });
 
 app.controller('chatCtrl', function ($scope, socket) {
-    $scope.tabs = []; 
-    //$scope.tabs = [{gid:'2', messages:['afeaf','af','aaaaaa'],toSendMessage:""},{gid:'1', messages:['123','222','333333'],toSendMessage:""}];
+    $scope.tabs = [];
+    // $scope.tabs = [{gid:'2', messages:['afeaf','af','aaaaaa'],toSendMessage:""},{gid:'1', messages:['123','222','333333'],toSendMessage:""}];
     $scope.toSendMessage = '';
 
 
@@ -14,11 +14,11 @@ app.controller('chatCtrl', function ($scope, socket) {
     socket.on('message', function(data){
         var index = $scope.findTab(data.gid);
         if(index){
-          $scope.tabs[index].messages.push(data.content);
+            $scope.tabs[index].messages.push(data.content);
         }
         else{
-        console.log("new guest, new tab");
-        $scope.tabs.push({gid:data.gid, messages:[data.content],toSendMessage:""});
+            console.log("new guest, new tab");
+            $scope.tabs.push({gid:data.gid, messages:[data.content],toSendMessage:""});
         }
     });
 
@@ -30,7 +30,7 @@ app.controller('chatCtrl', function ($scope, socket) {
 
     $scope.findTab = function(guestId){
         for(var i in $scope.tabs){
-            if($scope.tabs[i].gid==guestId) 
+            if($scope.tabs[i].gid==guestId)
             {
                 return i;
             }
@@ -49,5 +49,5 @@ app.controller('chatCtrl', function ($scope, socket) {
         var index = $scope.findTab(guestId);
         $scope.tabs.splice(index,1);
     };
-  
+
 });

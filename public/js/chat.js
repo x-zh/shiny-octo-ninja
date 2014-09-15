@@ -10,7 +10,7 @@ socket.on("connect", function(){
     });
     */
     socket.on("message", function(msg){
-	$('#messages').append($('<li>').text(msg));
+		$('#messages').append($('<li>').text(msg));
     });
 })
 

@@ -11,7 +11,9 @@ var app = express();
 
 //use session
 app.use(session({
-    secret: 'I see'
+    secret: 'I see',
+    resave: true,
+    saveUninitialized: true
 }));
 
 //mongodb setup
@@ -49,7 +51,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//route 
+//route
 var routes = require('./routes/index');
 var users = require('./routes/users');
 

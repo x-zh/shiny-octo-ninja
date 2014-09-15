@@ -28,17 +28,17 @@ router.get('/', function(req, res) {
 });
 
 router.get('/chat', function(req, res) {
-    res.render('chat', {gid: req.sessionID, uid:1});
+    res.render('chat', {gid: req.sessionID, uid:req.query.uid});
 });
 
 router.get('/login', function(req,res){
     res.sendfile('views/login.html');
 })
 
-router.post('/login', 
-	passport.authenticate('local', { 
+router.post('/login',
+	passport.authenticate('local', {
                     failureRedirect: '/login',
-					failureFlash: false 
+					failureFlash: false
                 }),
     function(req,res) {
         res.redirect('/');
