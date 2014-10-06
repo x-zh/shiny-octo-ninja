@@ -4,8 +4,9 @@ block content
   h1 Welcome, #{user.username}
   div
     div insert this piece of code into your websites:
-    div xxxxxxxxxxxxx?uid=#{user._id}
-  br
+    //-div xxxxxxxxxxxxx?uid=#{user._id}
+    textarea(rows="9", cols="40"). 
+      &lt;div id=&quot;chatbox&quot; style=&quot;position: fixed; font-family: sans-serif; font-size: 12px; z-index: 100; visibility: visible; width: 300px;  bottom: 0px; right: 20px; left: auto; background-color: rgb(255, 255, 255);&quot;&gt; &lt;div id=&quot;chatbox-header&quot; style=&quot;background-color:#000000; height: 20px ;&quot;&gt;&lt;span&gt;click here&lt;/span&gt;&lt;/div&gt; &lt;iframe style=&quot;display:none&quot; src=&quot;http://localhost:3000/chat?uid=5404daab09f8b8346952e351&quot;&gt;&lt;/iframe&gt; &lt;/div&gt; &lt;script src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js&quot;&gt;&lt;/script&gt; &lt;script&gt; $('#chatbox-header').click(function() { $('iframe').slideToggle(); });
   a(href="/chat-cs") Customer Service Chat Page
 
   br

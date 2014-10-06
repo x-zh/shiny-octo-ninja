@@ -78,7 +78,8 @@ router.get('/chat-cs', requireLogin, function(req,res){
 
 
 router.get('/home', requireLogin, function(req, res) {
-    res.render('home', { user:req.user });
+    var url = req.protocol+"://"+req.headers['host']
+    res.render('home', { user:req.user, hostUrl:url });
 });
 
 
